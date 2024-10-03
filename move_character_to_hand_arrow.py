@@ -1,4 +1,5 @@
 from pico2d import *
+import random
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
@@ -16,8 +17,14 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
+def random_hand():
+    hand_x = random.randint(0, TUK_WIDTH)
+    hand_y = random.randint(0, TUK_HEIGHT)
+    return hand_x, hand_y
+
 running = True
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
+hand_x, hand_y = random_hand()
 frame = 0
 
 hide_cursor()
@@ -26,6 +33,7 @@ while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    hand.draw(hand_x, hand_y)
     update_canvas()
     frame = (frame + 1) % 8
     handle_events()
